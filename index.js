@@ -9,7 +9,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const a = ["-", "-", "-"];
+const a = ["-", "X", "X"];
 const b = ["-", "-", "-"];
 const c = ["-", "-", "-"];
 
@@ -40,26 +40,66 @@ const aboutPlayer = () =>{
 } //get the name of the players
 
 const winner = () => {
+  const reloadGame = () => {
+    rl.question('Wanna play again? (yes/no): ', function(reloaded){
+      switch (reloaded) {
+        case 'yes':
+          console.log('NICE! SO...');
+          play1.numb = 2
+          play2.numb = 1
+          gamer.points += 1
+          a.forEach(element => {
+          a[element] = '-'
+          b[element] = '-'
+          c[element] = '-'
+          });
+
+          game()
+          break;
+        case 'no':
+          console.log('Thas okay.');
+          process.exit()
+          break;
+        default:
+          console.log(`${reloaded} it's not a valid option, please say 'yes' or 'no'`);
+          reloadGame()
+      }
+    });
+
+  }
 
   if (a[0] === gamer.weapon && a[1] === gamer.weapon && a[2] === gamer.weapon){
-    console.log(`YOU WON ${gamer.name}!!`)
-    rl.question('Wanna play again? (yer/no)', function(reloaded){
-
-    })
-  } else if(b[0] === gamer.weapon && b[1] === gamer.weapon && b[2] === gamer.weapon){
-    console.log('that works!')
-  } else if(c[0] === gamer.weapon && c[1] === gamer.weapon && c[2] === gamer.weapon){
-  
-  } else if(a[0] === gamer.weapon && b[0] === gamer.weapon && c[0] === gamer.weapon){
+    console.log(`YOU WON ${gamer.name}!!`);
+    reloadGame();
     
+  } else if(b[0] === gamer.weapon && b[1] === gamer.weapon && b[2] === gamer.weapon){
+    console.log(`YOU WON ${gamer.name}!!`)
+    reloadGame()
+
+  } else if(c[0] === gamer.weapon && c[1] === gamer.weapon && c[2] === gamer.weapon){
+    console.log(`YOU WON ${gamer.name}!!`)
+    reloadGame()
+
+  } else if(a[0] === gamer.weapon && b[0] === gamer.weapon && c[0] === gamer.weapon){
+    console.log(`YOU WON ${gamer.name}!!`)
+    reloadGame()
+
   } else if(a[1] === gamer.weapon && b[1] === gamer.weapon && c[1] === gamer.weapon){
-  
+    console.log(`YOU WON ${gamer.name}!!`)
+    reloadGame()
+
   } else if(a[2] === gamer.weapon && b[2] === gamer.weapon && c[2] === gamer.weapon){
-  
+    console.log(`YOU WON ${gamer.name}!!`)
+    reloadGame()
+
   } else if(a[0] === gamer.weapon && b[1] === gamer.weapon && c[2] === gamer.weapon){
-  
+    console.log(`YOU WON ${gamer.name}!!`)
+    reloadGame()
+
   } else if(a[2] === gamer.weapon && b[1] === gamer.weapon && c[0] === gamer.weapon){
-  
+    console.log(`YOU WON ${gamer.name}!!`)
+    reloadGame()
+
   } else {
     game()
   }
@@ -68,6 +108,7 @@ const winner = () => {
 aboutPlayer()
 
 const game = () => {
+  
   
   const round = () => {
     if (play1.numb % 2 == 0){
@@ -85,36 +126,41 @@ const game = () => {
     }
   }// Define witch player will gonna play
     
-  rl.question(`Chose a letter between a,b or c: `, function (letter) {
-    if (!letter.match(/^(a|b|c)$/)){
-      console.log('Chose a valid number')
-      game()
+  rl.question(`Please, chose a letter between "a,b and c":  `, function (letter) {
+    rl.question(`Know chose a number between 0 and 2: `, function(numb){
 
-    } else {
-      round()
+      if (!letter.match(/^(a|b|c)$/) || !numb.match(/^(0|1|2)$/)){
+        console.log('Chose a valid letter or number')
+        game()
 
-    rl.question("Know chose a number from 0 to 2: ", function (numero) {
-      if (letter === "a") {
-        console.log(`${gamer.name}`)
-        a[parseInt(numero)] = gamer.weapon;
-        console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-        winner()
+      } else {
+        round()
+  
+        if (letter === "a") {
+          console.log(`${gamer.name}`)
+          a[parseInt(numb)] = gamer.weapon;
+          console.log(`|${a}|\n|${b}|\n|${c}|\n`);
+          winner()
+  
+        } else if (letter === "b") {
+          console.log(`${gamer.name}`)
+          b[parseInt(numb)] = gamer.weapon;
+          console.log(`|${a}|\n|${b}|\n|${c}|\n`);
+          winner()
+          
+        } else if (letter === "c") {
+          console.log(`${gamer.name}`)
+          c[parseInt(numb)] = gamer.weapon;
+          console.log(`|${a}|\n|${b}|\n|${c}|\n`);
+          winner()
+          
+        }
+  
+      }
 
-      } else if (letter === "b") {
-        console.log(`${gamer.name}`)
-        b[parseInt(numero)] = gamer.weapon;
-        console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-        winner()
-        
-      } else if (letter === "c") {
-        console.log(`${gamer.name}`)
-        c[parseInt(numero)] = gamer.weapon;
-        console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-        winner()
-        
-      } 
-    });
-  }
+    })    
+
+    
     rl.prompt();
   }); //the mechanic that display the "X" or "O", depends on which player is playing
 
@@ -122,7 +168,7 @@ const game = () => {
 };
 
 rl.on("close", function () {
-  console.log(`BYE BYE ${play1.name, play1.numb} and ${play2.name, play2.numb}`);
+  console.log(`BYE BYE ${play1.name, play1.numb}`);
   process.exit(0);
 
 });
