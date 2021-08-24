@@ -1,5 +1,6 @@
 //=======================================tic tac toe========================================//
 
+const { ALL } = require("dns");
 const readline = require("readline");
 const { isFunction } = require("util");
 
@@ -36,29 +37,33 @@ const aboutPlayer = () =>{
     })
   })
   rl.prompt
-} //get the name of players
+} //get the name of the players
 
 const winner = () => {
-  if ([a[0],a[1],a[2]].includes(gamer.weapon)){
-    console.log(`WELL PLAYED ${gamer.name}!!`)
-  } else if([b[0],b[1],b[2]].includes(gamer.weapon)){
 
-  } else if([c[0],c[1],c[2]].includes(gamer.weapon)){
+  if (a[0] === gamer.weapon && a[1] === gamer.weapon && a[2] === gamer.weapon){
+    console.log(`YOU WON ${gamer.name}!!`)
+    rl.question('Wanna play again? (yer/no)', function(reloaded){
 
-  } else if([a[0],b[0],c[0]].includes(gamer.weapon)){
+    })
+  } else if(b[0] === gamer.weapon && b[1] === gamer.weapon && b[2] === gamer.weapon){
+    console.log('that works!')
+  } else if(c[0] === gamer.weapon && c[1] === gamer.weapon && c[2] === gamer.weapon){
+  
+  } else if(a[0] === gamer.weapon && b[0] === gamer.weapon && c[0] === gamer.weapon){
     
-  } else if([a[1],b[1],c[1]].includes(gamer.weapon)){
-
-  } else if([a[2],b[2],c[2]].includes(gamer.weapon)){
-
-  } else if([a[0],b[1],c[2]].includes(gamer.weapon)){
-
-  } else if([a[2],b[1],c[0]].includes(gamer.weapon)){
-
+  } else if(a[1] === gamer.weapon && b[1] === gamer.weapon && c[1] === gamer.weapon){
+  
+  } else if(a[2] === gamer.weapon && b[2] === gamer.weapon && c[2] === gamer.weapon){
+  
+  } else if(a[0] === gamer.weapon && b[1] === gamer.weapon && c[2] === gamer.weapon){
+  
+  } else if(a[2] === gamer.weapon && b[1] === gamer.weapon && c[0] === gamer.weapon){
+  
   } else {
     game()
   }
-}
+} // The mechanic that checks whether the player has won and wants to continue playing
 
 aboutPlayer()
 
@@ -111,7 +116,7 @@ const game = () => {
     });
   }
     rl.prompt();
-  });//the mechanic of the game
+  }); //the mechanic that display the "X" or "O", depends on which player is playing
 
   aboutPlayer()
 };
