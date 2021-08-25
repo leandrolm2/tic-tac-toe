@@ -1,5 +1,5 @@
 # :space_invader: tic-tac-toe
-Markup :  - - - -
+  - - - -
 
 :wave: Hi everyone!
 
@@ -8,7 +8,7 @@ This's a Tic Tac Toe proposed to me as a challenge in order to improve my coding
 
 
 ## :boom: Chalengs
-Markup :  - - - -
+  - - - -
 To make a funcitonal Tic Tac Toe, I faced some chalengs a long the way, challenges such as:
 *Make it playable for two players
 *Apply Tic Tac Toe Rules
@@ -17,7 +17,7 @@ To make a funcitonal Tic Tac Toe, I faced some chalengs a long the way, challeng
 *Make the game replayable
 
 ## :video_game: Gameplay
-Markup :  - - - -
+  - - - -
 
 The gameplay and commands of this game are pretty simple. You have to get three "X", case you are player 1, or "O", case you are player 2, in a row inside the player board.
 
@@ -30,6 +30,6 @@ a|X,-,O|
 b|-,X,O|
 c|-,-,X|
 
-Markup :  - - - -
+  - - - -
 ## On going
 This project's not finished yet so that you know that can be some changes in the future
