@@ -28,6 +28,8 @@ const play2 = {
 }
 let gamer = {}
 
+console.log(`|${a}|\n|${b}|\n|${c}|\n`);
+
 const aboutPlayer = () =>{
   rl.question("what's your name player 1? ", function (name1) {
     rl.question("what's your name player 2? ", function (name2) {
@@ -47,7 +49,7 @@ const winner = () => {
           console.log('NICE! SO...');
           play1.numb = 2
           play2.numb = 1
-          gamer.points += 1
+          
 
           for (i = 0; i <a.length;i++){
             a[i] = '-'
@@ -58,8 +60,18 @@ const winner = () => {
           game()
           break;
         case 'no':
-          console.log('Thas okay.');
-          process.exit()
+          if (play1.points > play2.points){
+            console.log(`With ${play1.points} points, ${play1.name} was the overall winner of the match over ${play2.name}, with ${play2.points} poinst`)
+            process.exit()
+
+          } else if (play2.points > play1.points){
+            console.log(`With ${play2.points} points, ${play2.name} was the overall winner of the match over ${play1.name}, with ${play1.points} poinst`)
+            process.exit()
+
+          } else {
+            console.log(`The overall match was an empate, both players with the amount of ${play1.points}`)
+            process.exit()
+          }
           break;
         default:
           console.log(`${reloaded} it's not a valid option, please say 'yes' or 'no'`);
@@ -67,48 +79,58 @@ const winner = () => {
       }
     });
 
-  }
+  } //reset the ga
 
   if (a[0] === gamer.weapon && a[1] === gamer.weapon && a[2] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`);
+    gamer.points += 2
     rematch();
     
   } else if(b[0] === gamer.weapon && b[1] === gamer.weapon && b[2] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
+    gamer.points += 2
     rematch()
 
   } else if(c[0] === gamer.weapon && c[1] === gamer.weapon && c[2] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
+    gamer.points += 2
     rematch()
 
   } else if(a[0] === gamer.weapon && b[0] === gamer.weapon && c[0] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
+    gamer.points += 2
     rematch()
 
   } else if(a[1] === gamer.weapon && b[1] === gamer.weapon && c[1] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
+    gamer.points += 2
     rematch()
 
   } else if(a[2] === gamer.weapon && b[2] === gamer.weapon && c[2] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
+    gamer.points += 2
     rematch()
 
   } else if(a[0] === gamer.weapon && b[1] === gamer.weapon && c[2] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
+    gamer.points += 2
     rematch()
 
   } else if(a[2] === gamer.weapon && b[1] === gamer.weapon && c[0] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
+    gamer.points += 2
     rematch()
 
   } else if(!a.includes('-') && !b.includes('-') && !c.includes('-')){
     console.log('So close! The game has empate')
+    play1.points += 1
+    play2.points += 1
     rematch()
 
   } else {
     game()
   }
-} // The mechanic that checks whether the player has won and wants to continue playing
+} // The mechanic checks whether the player has won and if they want to continue playing
 
 aboutPlayer()
 
@@ -143,11 +165,12 @@ const game = () => {
         if (letter === "a") {
           if (a[parseInt(numb)] === 'X' || a[parseInt(numb)] === 'O'){
             console.log(`This field it's not empty, please chose another option`);
+            
             game();
 
           } else {
             round()
-            console.log(`${gamer.name}`)
+            console.log(`${gamer.name}, That was your move`)
             a[parseInt(numb)] = gamer.weapon;
             console.log(`|${a}|\n|${b}|\n|${c}|\n`);
             winner();
@@ -161,7 +184,7 @@ const game = () => {
 
           } else {
             round()
-            console.log(`${gamer.name}`)
+            console.log(`${gamer.name}, That was your move`)
             b[parseInt(numb)] = gamer.weapon;
             console.log(`|${a}|\n|${b}|\n|${c}|\n`);
             winner();
@@ -175,7 +198,7 @@ const game = () => {
 
           } else {
             round()
-            console.log(`${gamer.name}`);
+            console.log(`${gamer.name}, That was your move`);
             c[parseInt(numb)] = gamer.weapon;
             console.log(`|${a}|\n|${b}|\n|${c}|\n`);
             winner();
@@ -192,8 +215,6 @@ const game = () => {
 };
 
 rl.on("close", function () {
-  console.log(`BYE BYE ${play1.name} and ${play2.name}`);
   process.exit(0);
-
 });
 
