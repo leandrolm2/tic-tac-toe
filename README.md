@@ -25,10 +25,12 @@ The comands for playing the game are:
 * chose a letter between 'a,b,c'
 * Chose a number between '0,1,2'
 * If you get three marks in a row you won the game as in the examplo bellow 
-_ 0,1,2
-a|X,-,O|
-b|-,X,O|
-c|-,-,X|
+
+ ![picture alt](https://stickershop.line-scdn.net/stickershop/v1/product/4180220/LINEStorePC/main.png;compress=true)
+
+
+
+
 
   - - - -
 ## On going
