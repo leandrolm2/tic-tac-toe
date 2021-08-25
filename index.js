@@ -9,7 +9,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const a = ["-", "X", "X"];
+const a = ["-", "-", "-"];
 const b = ["-", "-", "-"];
 const c = ["-", "-", "-"];
 
@@ -40,7 +40,7 @@ const aboutPlayer = () =>{
 } //get the name of the players
 
 const winner = () => {
-  const reloadGame = () => {
+  const rematch = () => {
     rl.question('Wanna play again? (yes/no): ', function(reloaded){
       switch (reloaded) {
         case 'yes':
@@ -48,11 +48,12 @@ const winner = () => {
           play1.numb = 2
           play2.numb = 1
           gamer.points += 1
-          a.forEach(element => {
-          a[element] = '-'
-          b[element] = '-'
-          c[element] = '-'
-          });
+
+          for (i = 0; i <a.length;i++){
+            a[i] = '-'
+            b[i] = '-'
+            c[i] = '-'
+          }
 
           game()
           break;
@@ -62,7 +63,7 @@ const winner = () => {
           break;
         default:
           console.log(`${reloaded} it's not a valid option, please say 'yes' or 'no'`);
-          reloadGame()
+          rematch()
       }
     });
 
@@ -70,35 +71,39 @@ const winner = () => {
 
   if (a[0] === gamer.weapon && a[1] === gamer.weapon && a[2] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`);
-    reloadGame();
+    rematch();
     
   } else if(b[0] === gamer.weapon && b[1] === gamer.weapon && b[2] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
-    reloadGame()
+    rematch()
 
   } else if(c[0] === gamer.weapon && c[1] === gamer.weapon && c[2] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
-    reloadGame()
+    rematch()
 
   } else if(a[0] === gamer.weapon && b[0] === gamer.weapon && c[0] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
-    reloadGame()
+    rematch()
 
   } else if(a[1] === gamer.weapon && b[1] === gamer.weapon && c[1] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
-    reloadGame()
+    rematch()
 
   } else if(a[2] === gamer.weapon && b[2] === gamer.weapon && c[2] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
-    reloadGame()
+    rematch()
 
   } else if(a[0] === gamer.weapon && b[1] === gamer.weapon && c[2] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
-    reloadGame()
+    rematch()
 
   } else if(a[2] === gamer.weapon && b[1] === gamer.weapon && c[0] === gamer.weapon){
     console.log(`YOU WON ${gamer.name}!!`)
-    reloadGame()
+    rematch()
+
+  } else if(!a.includes('-') && !b.includes('-') && !c.includes('-')){
+    console.log('So close! The game has empate')
+    rematch()
 
   } else {
     game()
@@ -134,33 +139,52 @@ const game = () => {
         game()
 
       } else {
-        round()
   
         if (letter === "a") {
-          console.log(`${gamer.name}`)
-          a[parseInt(numb)] = gamer.weapon;
-          console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-          winner()
+          if (a[parseInt(numb)] === 'X' || a[parseInt(numb)] === 'O'){
+            console.log(`This field it's not empty, please chose another option`);
+            game();
+
+          } else {
+            round()
+            console.log(`${gamer.name}`)
+            a[parseInt(numb)] = gamer.weapon;
+            console.log(`|${a}|\n|${b}|\n|${c}|\n`);
+            winner();
+          }
+          
   
         } else if (letter === "b") {
-          console.log(`${gamer.name}`)
-          b[parseInt(numb)] = gamer.weapon;
-          console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-          winner()
+          if (b[parseInt(numb)] === 'X' || b[parseInt(numb)] === 'O'){
+            console.log(`This field it's not empty, please chose another option`);
+            game();
+
+          } else {
+            round()
+            console.log(`${gamer.name}`)
+            b[parseInt(numb)] = gamer.weapon;
+            console.log(`|${a}|\n|${b}|\n|${c}|\n`);
+            winner();
+          }
+          
           
         } else if (letter === "c") {
-          console.log(`${gamer.name}`)
-          c[parseInt(numb)] = gamer.weapon;
-          console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-          winner()
-          
+          if (c[parseInt(numb)] === 'X' || c[parseInt(numb)] === 'O'){
+            console.log(`This field it's not empty, please chose another option`);
+            game();
+
+          } else {
+            round()
+            console.log(`${gamer.name}`);
+            c[parseInt(numb)] = gamer.weapon;
+            console.log(`|${a}|\n|${b}|\n|${c}|\n`);
+            winner();
+
+          }
         }
-  
       }
+    });    
 
-    })    
-
-    
     rl.prompt();
   }); //the mechanic that display the "X" or "O", depends on which player is playing
 
@@ -168,7 +192,7 @@ const game = () => {
 };
 
 rl.on("close", function () {
-  console.log(`BYE BYE ${play1.name, play1.numb}`);
+  console.log(`BYE BYE ${play1.name} and ${play2.name}`);
   process.exit(0);
 
 });
