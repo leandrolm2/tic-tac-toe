@@ -39,8 +39,8 @@ const start = () => {
   console.log('   ##    ####  ######        ##    ##     ##  ######        ##     #######  ######## ')
   console.log('=====================================================================================\n')
   
-  console.log(`                                 Single Pleyer  [ctrl+1]                             \n`)
-  console.log(`                                  multiplayer   [ctrl+2]                             \n`)
+  console.log(`                                 Single Pleyer  [ctrl+u]                             \n`)
+  console.log(`                                  multiplayer   [ctrl+y]                             \n`)
   console.log(`                                      exit      [ctrl+c]                             \n`)
 
   readline.emitKeypressEvents(process.stdin);
@@ -49,11 +49,14 @@ const start = () => {
   }
 
   process.stdin.on('keypress', (str, key) => {
-    if (key.ctrl && key.name === 'm') {
+    if (key.ctrl && key.name === 'y') {
       console.clear()
       multiplayer()
-    } else {
-      
+    }
+    
+    if (key.ctrl && key.name === 'u') {
+      console.clear()
+      multiplayer()
     }
   });
 
