@@ -7,9 +7,9 @@ This's a Tic Tac Toe proposed to me as a challenge in order to improve my coding
 
 
 
-## :boom: Chalengs
+## :boom: Challenges
   - - - -
-To make a funcitonal Tic Tac Toe, I faced some chalengs a long the way, challenges such as:
+To make a funcitonal Tic Tac Toe, I faced some challenges a long the way, challenges such as:
 * Make it playable for two players
 * Apply Tic Tac Toe Rules
 * Recognize who won or if the match is a draw
@@ -27,10 +27,6 @@ The comands for playing the game are:
 * If you get three marks in a row you won the game as in the examplo bellow 
 
  ![picture alt](https://stickershop.line-scdn.net/stickershop/v1/product/4180220/LINEStorePC/main.png;compress=true)
-
-
-
-
 
   - - - -
 ## On going
