@@ -400,6 +400,7 @@ const start = () => {
                 }
               } else if (letter === "b") {
                 if (b[parseInt(numb)] === "X" || b[parseInt(numb)] === "O") {
+                  
                   console.log(`This field it's not empty, please chose another option`);
                   game(decision);
 
