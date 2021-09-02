@@ -142,11 +142,11 @@ const start = () => {
           play1.numb = 2;
         }
 
-      if (bot.numb === 2) {
-        gamer = bot;
-        bot.numb = 1;
+      if (play2.numb === 2) {
+        gamer = play2;
+        play2.numb = 1;
       } else {
-        bot.numb = 2;
+        play2.numb = 2;
       }
       multiplayer()
 
@@ -176,26 +176,33 @@ const start = () => {
         rl.question("Wanna play again? (yes/no): ", function (reloaded) {
           switch (reloaded) {
             case "yes":
-              
-              if (decision === 'u'){
-                play1.numb = 1;
-                play2.numb = 2;
-              } else {
-                play1.numb = 1
-                bot.numb = 2
-                
-              }
 
               for (i = 0; i < a.length; i++) {
                 a[i] = " ";
                 b[i] = " ";
                 c[i] = " ";
               }
+              
+              if (decision === 'u'){
+                play1.numb = 1;
+                play2.numb = 2;
 
-              console.clear()
-              display()
-              console.log("NICE! SO...");
-              game(decision)
+                console.clear()
+                display()
+                console.log("NICE! SO...");
+                gamer = play1
+                multiplayer()
+              } else {
+                play1.numb = 1
+                bot.numb = 2
+                
+                console.clear()
+                display()
+                console.log("NICE! SO...");
+                gamer = play1
+                singlePlayer()
+              }
+
 
               break;
             case "no":
