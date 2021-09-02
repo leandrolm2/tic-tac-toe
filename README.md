@@ -10,10 +10,13 @@ This's a Tic Tac Toe proposed to me as a challenge in order to improve my coding
 ## :boom: Challenges
   - - - -
 To make a funcitonal Tic Tac Toe, I faced some challenges a long the way, challenges such as:
-* Make it playable for two players
+
+* A descent menu
+* Single player mode
+* Multiplayer mode
 * Apply Tic Tac Toe Rules
 * Recognize who won or if the match is a draw
-* Display something that reminds Tic Tac Tie at the prompt
+* Display something that reminds Tic Tac Toe at the prompt
 * Make the game replayable
 
 ## :video_game: Gameplay
