@@ -1,5 +1,3 @@
-//=======================================tic tac toe========================================//
-
 const readline = require("readline");
 const readlinesync = require("readline-sync");
 
@@ -8,9 +6,9 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const a = ["-", "-", "-"];
-const b = ["-", "-", "-"];
-const c = ["-", "-", "-"];
+const a = [" ", " ", " "];
+const b = [" ", " ", " "];
+const c = [" ", " ", " "];
 
 const play1 = {
   name: "",
@@ -51,6 +49,7 @@ let decision = 'qulquer coisa'
 
 const start = () => {
   const menu = () => {
+  console.clear()
   console.log('=====================================================================================')
   console.log('######## ####  ######     ########    ###     ######     ########  #######  ######## ') 
   console.log('   ##     ##  ##    ##       ##      ## ##   ##    ##       ##    ##     ## ##       ')
@@ -61,9 +60,9 @@ const start = () => {
   console.log('   ##    ####  ######        ##    ##     ##  ######        ##     #######  ######## ')
   console.log('=====================================================================================\n')
   
-  console.log(`                                 Single Pleyer  [ctrl+y]                             \n`)
-  console.log(`                                  multiplayer   [ctrl+u]                             \n`)
-  console.log(`                                      exit      [ctrl+c]                             \n`)
+  console.log(`                               Single Pleyer  [ctrl+y]                             \n`)
+  console.log(`                                multiplayer   [ctrl+u]                             \n`)
+  console.log(`                                    exit      [ctrl+c]                             \n`)
 
   readline.emitKeypressEvents(process.stdin);
   if (process.stdin.isTTY){
@@ -87,11 +86,12 @@ const start = () => {
 
   const aboutPlayer = () => {
     if(decision === 'u'){
-      console.log(decision)
+      
       rl.question("what's your name player 1? ", function (name1) {
         rl.question("what's your name player 2? ", function (name2) {
           play1.name = name1;
           play2.name = name2;
+          gamer = play1
           game(decision)
           
         });
@@ -111,23 +111,44 @@ const start = () => {
   menu()
 
   const game = (decision) => {
+    const display = () => {
+      console.log(`     |     |      `);
     
+      console.log(`  ${a[0]}  |  ${a[1]}  |  ${a[2]}         `)
+    
+      console.log(`_____|_____|_____ `);
+    
+      console.log(`     |     |      `);
+    
+      console.log(`  ${b[0]}  |  ${b[1]}  |  ${b[2]}         `)
+    
+      console.log(`_____|_____|_____ `);
+    
+      console.log(`     |     |      `);
+    
+      console.log(`  ${c[0]}  |  ${c[1]}  |  ${c[2]}         `)
+    
+      console.log(`     |     |      `);
+    };
+
+
     const round = () => {
 
       if(decision === 'u'){
-        if (play1.numb === 1) {
+        if (play1.numb === 2) {
           gamer = play1;
-          play1.numb = 2;
-        } else {
           play1.numb = 1;
+        } else {
+          play1.numb = 2;
         }
 
-        if (play2.numb === 1) {
-          gamer = play2;
-          play2.numb = 2;
-        } else {
-          play2.numb = 1;
-        }
+      if (bot.numb === 2) {
+        gamer = bot;
+        bot.numb = 1;
+      } else {
+        bot.numb = 2;
+      }
+      multiplayer()
 
       } else if(decision === 'y'){
         if (play1.numb === 2) {
@@ -155,46 +176,48 @@ const start = () => {
         rl.question("Wanna play again? (yes/no): ", function (reloaded) {
           switch (reloaded) {
             case "yes":
-              console.log("NICE! SO...");
+              
               if (decision === 'u'){
                 play1.numb = 1;
                 play2.numb = 2;
               } else {
-                play1.numb = 2
-                bot.numb = 1
+                play1.numb = 1
+                bot.numb = 2
                 
               }
 
               for (i = 0; i < a.length; i++) {
-                a[i] = "-";
-                b[i] = "-";
-                c[i] = "-";
+                a[i] = " ";
+                b[i] = " ";
+                c[i] = " ";
               }
 
-              singlePlayer();
+              console.clear()
+              display()
+              console.log("NICE! SO...");
+              game(decision)
+
               break;
             case "no":
               if (play1.points > play2.points) {
-                console.log(
-                  `With ${play1.points} points, ${play1.name} was the overall winner of the match over ${play2.name}, with ${play2.points} poinst`
-                );
+
+                console.log(`With ${play1.points} points, ${play1.name} was the overall winner of the match over ${play2.name}, with ${play2.points} poinst`);
                 process.exit();
+
               } else if (play2.points > play1.points) {
-                console.log(
-                  `With ${play2.points} points, ${play2.name} was the overall winner of the match over ${play1.name}, with ${play1.points} poinst`
-                );
+                console.log(`With ${play2.points} points, ${play2.name} was the overall winner of the match over ${play1.name}, with ${play1.points} poinst`);
+
                 process.exit();
               } else {
-                console.log(
-                  `The overall match was an empate, both players with the amount of ${play1.points}`
-                );
+
+                console.log( `The overall match was an empate, both players with the amount of ${play1.points}`);
                 process.exit();
+
               }
               break;
             default:
-              console.log(
-                `${reloaded} it's not a valid option, please say 'yes' or 'no'`
-              );
+
+              console.log(`${reloaded} it's not a valid option, please say 'yes' or 'no'`);
               rematch();
           }
         });
@@ -233,15 +256,27 @@ const start = () => {
         
         rematch();
 
-      } else if (!a.includes("-") && !b.includes("-") && !c.includes("-")) {
+      } else if (!a.includes(" ") && !b.includes(" ") && !c.includes(" ")) {
+
         console.log("So close! The game has empate");
         play1.points += 1;
         play2.points += 1;
         rematch();
+
       } else {
+
+        round();
         game(decision);
+
       }
     }; // The mechanic checks whether the player has won and if they want to continue playing
+
+    const consequenceMove = () => {
+      console.clear();
+      console.log(`${gamer.name}, That was your move`); 
+      display();
+      winner();
+    }
 
     function singlePlayer() {
       if (gamer.name === "bot") {
@@ -250,40 +285,34 @@ const start = () => {
         console.log(newLocal)
         if (move === "a") {
           if (a[newLocal] === "O" || a[newLocal] === "X") {
+
             game(decision);
+
           } else {
-            
-            
-            console.clear();
+
             a[newLocal] = gamer.weapon;
-            console.log(`${gamer.name}, That was your move`);
-            console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-            round();
-            winner();
+            consequenceMove()
           }
         } else if (move === "b") {
           if (b[newLocal] === "O" || b[newLocal] === "X") {
+
             game(decision);
+
           } else {
-            
-            
-            console.clear();
             b[newLocal] = gamer.weapon;
-            console.log(`${gamer.name}, That was your move`);
-            console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-            round();
-            winner();
+            consequenceMove()
+
           }
         } else if (move === 'c'){
           if (c[newLocal] === "O" || c[newLocal] === "X") {
+
             game(decision);
+
           } else {
-            console.clear();
+            
             c[newLocal] = gamer.weapon;
-            console.log(`${gamer.name}, That was your move`);
-            console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-            round();
-            winner();
+            consequenceMove()
+
           }
         }
     
@@ -292,55 +321,47 @@ const start = () => {
         rl.question(`chose a letter between a,b or c: `, function (letter) {
           rl.question(`chose a number between 0,1 and 2: `, function (numb) {
             if (!letter.match(/^(a|b|c)$/) || !numb.match(/^(0|1|2)$/)) {
+
               console.clear();
               console.log("Chose a valid letter or number");
               game(decision);
+
             } else {
               if (letter === "a") {
                 if (a[parseInt(numb)] === "X" || a[parseInt(numb)] === "O") {
-                  console.log(
-                    `This field it's not empty, please chose another option`
-                  );
-    
+
+                  console.log(`This field it's not empty, please chose another option`);
                   game(decision);
+
                 } else {
+
                   a[parseInt(numb)] = gamer.weapon;
-                  
-                  console.clear();
-                  console.log(`${gamer.name}, That was your move`); 
-                  console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-                  round();
-                  winner();
+                  consequenceMove()
+
                 }
               } else if (letter === "b") {
                 if (b[parseInt(numb)] === "X" || b[parseInt(numb)] === "O") {
-                  console.log(
-                    `This field it's not empty, please chose another option`
-                  );
+
+                  console.log(`This field it's not empty, please chose another option`);
                   game(decision);
+
                 } else {
+
                   b[parseInt(numb)] = gamer.weapon;
-                  
-                  console.clear();
-                  console.log(`${gamer.name}, That was your move`);
-                  console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-                  round();
-                  winner();
+                  consequenceMove()
+
                 }
               } else if (letter === "c") {
                 if (c[parseInt(numb)] === "X" || c[parseInt(numb)] === "O") {
-                  console.log(
-                    `This field it's not empty, please chose another option`
-                  );
+
+                  console.log(`This field it's not empty, please chose another option`);
                   game(decision);
+
                 } else {
+
                   c[parseInt(numb)] = gamer.weapon;
-                  
-                  console.clear();
-                  console.log(`${gamer.name}, That was your move`);
-                  console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-                  round();
-                  winner();
+                  consequenceMove()
+
                 }
               }
             }
@@ -353,52 +374,46 @@ const start = () => {
       rl.question(`Please, chose a letter between "a,b and c":  `, function (letter) {
           rl.question(`Know chose a number between 0 and 2: `, function (numb) {
             if (!letter.match(/^(a|b|c)$/) || !numb.match(/^(0|1|2)$/)) {
+
               console.clear();
               console.log("Chose a valid letter or number");
               game(decision);
+
             } else {
               if (letter === "a") {
                 if (a[parseInt(numb)] === "X" || a[parseInt(numb)] === "O") {
-                  console.log(
-                    `This field it's not empty, please chose another option`
-                  );
-  
+
+                  console.log(`This field it's not empty, please chose another option`);
                   game(decision);
+
                 } else {
-                  round();
-                  console.clear();
-                  console.log(`${gamer.name}, That was your move`);
+
                   a[parseInt(numb)] = gamer.weapon;
-                  console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-                  winner();
+                  consequenceMove()
                 }
               } else if (letter === "b") {
                 if (b[parseInt(numb)] === "X" || b[parseInt(numb)] === "O") {
-                  console.log(
-                    `This field it's not empty, please chose another option`
-                  );
+
+                  console.log(`This field it's not empty, please chose another option`);
                   game(decision);
+
                 } else {
-                  round();
-                  console.clear();
-                  console.log(`${gamer.name}, That was your move`);
+
                   b[parseInt(numb)] = gamer.weapon;
-                  console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-                  winner();
+                  consequenceMove()
+
                 }
               } else if (letter === "c") {
                 if (c[parseInt(numb)] === "X" || c[parseInt(numb)] === "O") {
-                  console.log(
-                    `This field it's not empty, please chose another option`
-                  );
+
+                  console.log(`This field it's not empty, please chose another option`);
                   game(decision);
+
                 } else {
-                  round();
-                  console.clear();
-                  console.log(`${gamer.name}, That was your move`);
+
                   c[parseInt(numb)] = gamer.weapon;
-                  console.log(`|${a}|\n|${b}|\n|${c}|\n`);
-                  winner();
+                  consequenceMove()
+
                 }
               }
             }
