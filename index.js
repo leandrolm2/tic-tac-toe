@@ -30,7 +30,7 @@ const bot = {
   points: 0,
   numb: 2,
   abc: function () {
-      let moviment = Math.floor(Math.random() * 3)+1;
+      const moviment = Math.floor(Math.random() * 3)+1;
       if (moviment === 1){
           return 'a'
       } else if (moviment === 2){
@@ -44,6 +44,7 @@ const bot = {
   }
 };
 
+let firstToPlay;
 let gamer = {};
 let decision = 'qulquer coisa'
 
@@ -98,12 +99,27 @@ const start = () => {
       });
       rl.prompt;
     } else {
-        gamer = play1
         rl.question("what's your name player 1? ", function (name1) {
-        play1.name = name1
-        game(decision)
-      });
-      rl.prompt;
+          rl.question("Let bot make the first move? (yes/no) ", function (whoFirst) {
+            if(whoFirst === 'yes'){
+              firstToPlay = 'bot'
+              gamer = bot
+              play1.numb = 2
+              bot.numb = 1
+              play1.name = name1
+              game(decision)
+            } else if(whoFirst === 'no'){
+              gamer = play1
+              play1.name = name1
+              game(decision)
+            } else {
+              console.clear()
+              console(`that is not a valid option, please digite yes or no`)
+              aboutPlayer()
+            }
+          });
+        });
+        rl.prompt;
     }
   }; //get the name of the players
  }//Menu
@@ -112,23 +128,23 @@ const start = () => {
 
   const game = (decision) => {
     const display = () => {
-      console.log(`     |     |      `);
+      console.log(`      |     |      `);
     
-      console.log(`  ${a[0]}  |  ${a[1]}  |  ${a[2]}         `)
+      console.log(`   ${a[0]}  |  ${a[1]}  |  ${a[2]}         `)
     
-      console.log(`_____|_____|_____ `);
+      console.log(`______|_____|______ `);
     
-      console.log(`     |     |      `);
+      console.log(`      |     |      `);
     
-      console.log(`  ${b[0]}  |  ${b[1]}  |  ${b[2]}         `)
+      console.log(`   ${b[0]}  |  ${b[1]}  |  ${b[2]}         `)
     
-      console.log(`_____|_____|_____ `);
+      console.log(`______|_____|______ `);
     
-      console.log(`     |     |      `);
+      console.log(`      |     |      `);
     
-      console.log(`  ${c[0]}  |  ${c[1]}  |  ${c[2]}         `)
+      console.log(`   ${c[0]}  |  ${c[1]}  |  ${c[2]}         `)
     
-      console.log(`     |     |      `);
+      console.log(`      |     |      `);
     };
 
 
@@ -193,13 +209,26 @@ const start = () => {
                 gamer = play1
                 multiplayer()
               } else {
-                play1.numb = 1
-                bot.numb = 2
+                
+                if(firstToPlay === 'bot'){
+
+                  gamer = bot
+                  play1.numb = 2
+                  bot.numb = 1
+                  
+                } else {
+
+                  gamer = play1
+                  play1.numb = 1
+                  bot.numb = 2
+
+                }
+                
                 
                 console.clear()
                 display()
                 console.log("NICE! SO...");
-                gamer = play1
+                
                 singlePlayer()
               }
 
@@ -380,6 +409,7 @@ const start = () => {
     function multiplayer() {
       rl.question(`Please, chose a letter between "a,b and c":  `, function (letter) {
           rl.question(`Know chose a number between 0 and 2: `, function (numb) {
+            let numbParseInt = parseInt(numb);
             if (!letter.match(/^(a|b|c)$/) || !numb.match(/^(0|1|2)$/)) {
 
               console.clear();
@@ -388,37 +418,37 @@ const start = () => {
 
             } else {
               if (letter === "a") {
-                if (a[parseInt(numb)] === "X" || a[parseInt(numb)] === "O") {
+                if (a[numbParseInt] === "X" || a[numbParseInt] === "O") {
 
                   console.log(`This field it's not empty, please chose another option`);
                   game(decision);
 
                 } else {
 
-                  a[parseInt(numb)] = gamer.weapon;
+                  a[numbParseInt] = gamer.weapon;
                   consequenceMove()
                 }
               } else if (letter === "b") {
-                if (b[parseInt(numb)] === "X" || b[parseInt(numb)] === "O") {
+                if (b[numbParseInt] === "X" || b[numbParseInt] === "O") {
                   
                   console.log(`This field it's not empty, please chose another option`);
                   game(decision);
 
                 } else {
 
-                  b[parseInt(numb)] = gamer.weapon;
+                  b[numbParseInt] = gamer.weapon;
                   consequenceMove()
 
                 }
               } else if (letter === "c") {
-                if (c[parseInt(numb)] === "X" || c[parseInt(numb)] === "O") {
+                if (c[numbParseInt] === "X" || c[numbParseInt] === "O") {
 
                   console.log(`This field it's not empty, please chose another option`);
                   game(decision);
 
                 } else {
 
-                  c[parseInt(numb)] = gamer.weapon;
+                  c[numbParseInt] = gamer.weapon;
                   consequenceMove()
 
                 }
