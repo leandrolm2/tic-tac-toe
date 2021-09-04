@@ -32,7 +32,7 @@ const bot = {
   abc: function () {
       const moviment = Math.floor(Math.random() * 3)+1;
       if (moviment === 1){
-          return 'a'
+        return 'a'
       } else if (moviment === 2){
         return 'b'
     } else if (moviment === 3){
@@ -238,16 +238,16 @@ const start = () => {
               if (play1.points > play2.points) {
 
                 console.log(`With ${play1.points} points, ${play1.name} was the overall winner of the match over ${play2.name}, with ${play2.points} poinst`);
-                process.exit();
+                rl.close()
 
               } else if (play2.points > play1.points) {
                 console.log(`With ${play2.points} points, ${play2.name} was the overall winner of the match over ${play1.name}, with ${play1.points} poinst`);
 
-                process.exit();
+                rl.close()
               } else {
 
                 console.log( `The overall match was an empate, both players with the amount of ${play1.points}`);
-                process.exit();
+                rl.close()
 
               }
               break;
@@ -305,7 +305,7 @@ const start = () => {
         game(decision);
 
       }
-    }; // The mechanic checks whether the player has won and if they want to continue playing
+    }; // The mechanic checks wheter the player has won and if they want continuos to play
 
     const consequenceMove = () => {
       console.clear();
@@ -481,5 +481,16 @@ const start = () => {
 
 start()
 rl.on("close", function () {
-  process.exit(0);
+  console.clear()
+ console.log('======================================================================================================================================')
+ console.log(' ######  ######## ########    ##    ##  #######  ##     ##    ##    ## ######## ##     ## ########    ######## #### ##     ## ######## ')
+ console.log('##    ## ##       ##           ##  ##  ##     ## ##     ##    ###   ## ##        ##   ##     ##          ##     ##  ###   ### ##       ')
+ console.log('##       ##       ##            ####   ##     ## ##     ##    ####  ## ##         ## ##      ##          ##     ##  #### #### ##       ')
+ console.log(' ######  ######   ######         ##    ##     ## ##     ##    ## ## ## ######      ###       ##          ##     ##  ## ### ## ######   ')
+ console.log('      ## ##       ##             ##    ##     ## ##     ##    ##  #### ##         ## ##      ##          ##     ##  ##     ## ##       ')
+ console.log('##    ## ##       ##             ##    ##     ## ##     ##    ##   ### ##        ##   ##     ##          ##     ##  ##     ## ##       ')
+ console.log(' ######  ######## ########       ##     #######   #######     ##    ## ######## ##     ##    ##          ##    #### ##     ## ######## ')
+ console.log('======================================================================================================================================')
+  
+ process.exit(0);
 });
