@@ -23,6 +23,14 @@ class Player {
 
     /**
      * 
+     * @returns {boolean} set to the original player turn
+     */
+    setPlayerTurn() {
+        return this.playerTurn
+    }
+
+    /**
+     * 
      * @returns {string} returns weapon the current player 
      */
     getWeapon() {

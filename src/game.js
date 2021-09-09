@@ -181,7 +181,10 @@ const rematch = () => {
     });
 }
 
-
+/**
+ * 
+ * Makes the decision of the bot's move
+ */
 const botMove = (firstLine, secondLine, thirdLine) => {
     const line = Math.floor(Math.random() * 3)+1;
     const column = Math.floor(Math.random() * 3);
@@ -356,8 +359,7 @@ const checkWinner = () => {
  * Show the current status of the game
  */
 const consequenceMove = () => {
-    console.clear();
-    console.log(`${playerRound.getName()}, That was your move`); 
+    console.clear(); 
     display();
     checkWinner();
 };
@@ -437,8 +439,8 @@ const multiplayer = (rematch = false) => {
             });
         });
     } else {
-        playerOne.playerTurn = true;
-        playerTwo.playerTurn = false;
+        playerOne.playerTurn = true
+        playerTwo.playerTurn = false
         setup();
         display();
         CurrentPlayer()
@@ -482,8 +484,8 @@ const singlePlayer = (rematch = false) => {
             CurrentPlayer();
             game();
         } else {
-            playerOne.playerTurn = true;
-            botPlayer.playerTurn = false;
+            playerOne.setPlayerTurn()
+            botPlayer.setPlayerTurn()
             setup();
             display();
             CurrentPlayer();
