@@ -25,7 +25,7 @@ class Player {
      * 
      * @returns {boolean} set to the original player turn
      */
-    setPlayerTurn() {
+    getPlayerTurn() {
         return this.playerTurn
     }
 
@@ -37,6 +37,9 @@ class Player {
         return this.weapon;
     };
 
+    setTurn() {
+        return this.playerTurn
+    }
     
     /**
      * Gives the player 2 points by winning
