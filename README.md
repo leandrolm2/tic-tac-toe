@@ -32,6 +32,5 @@ The comands for playing the game are:
  ![picture alt](https://stickershop.line-scdn.net/stickershop/v1/product/4180220/LINEStorePC/main.png;compress=true)
 
   - - - -
-
 ## :hammer: Current State
 The project is complete, I don't plan to add any features anytime soon
