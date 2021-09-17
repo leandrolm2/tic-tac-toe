@@ -13,7 +13,7 @@ const rl = readline.createInterface({
 
 
 
-let playFirst
+let botPlayFirst;
 let playerRound;
 let gameChoice;
 let playerOne;
@@ -48,10 +48,9 @@ const changeTurn = () => {
 };
 
 /**
- * Get a attribute value from the current player
- * @param {'weapon'|'name'} att Attribute name to be returned
+ * Define the current player to the playeRound global variable
  */
-const currentPlayer = () => { //funcões sempre começam com letra minuscula <===== arrumar
+const currentPlayer = () => {
     if(gameChoice === gameModesEnum.SINGLE_PLAYER) {
         if (playerOne && playerOne.getPlayerTurn()) {
             playerRound = playerOne;
@@ -267,8 +266,8 @@ const multiplayer = (rematch = false) => {
             });
         });
     } else {
-        playerOne.setTurn(true);
-        playerTwo.setTurn(false);
+        playerOne.setPlayerTurn(true);
+        playerTwo.setPlayerTurn(false);
         setup();
         displayTable(firstLine, secondLine, thirdLine);
         currentPlayer()
@@ -290,6 +289,7 @@ const singlePlayer = (rematch = false) => {
                 console.log('Choose a valid option');
                 singlePlayer();
             } else {
+                botPlayFirst = firstMove;
                 rl.question("what's your name player 1? ", (namePlayerOne) => {
                     const botPlaysFirst = firstMove === 'yes' ? true : false;
                     playerOne = new Player(namePlayerOne, 'X', !botPlaysFirst);
@@ -302,17 +302,17 @@ const singlePlayer = (rematch = false) => {
             }                 
         });
         
-    } else { //criar um setPlayerTurn
-        if (playFirst === 'yes'){
-            playerOne.setTurn(false);
-            botPlayer.setTurn(true);
+    } else {
+        if (botPlayFirst === 'yes'){
+            playerOne.setPlayerTurn(false);
+            botPlayer.setPlayerTurn(true);
             setup();
             displayTable(firstLine, secondLine, thirdLine);
             currentPlayer();
             game();
         } else {
-            playerOne.setTurn(true);
-            botPlayer.setTurn(false);
+            playerOne.setPlayerTurn(true);
+            botPlayer.setPlayerTurn(false);
             setup();
             displayTable(firstLine, secondLine, thirdLine);
             currentPlayer();
@@ -321,23 +321,6 @@ const singlePlayer = (rematch = false) => {
         
     }
 }
-
-/**
- * Starts the tic-tac-toe game
- */
-const start = () => { //O menu tem que estar acima do start, colocar esse código abaixo do menu <========= (ATTENTION)
-    menu();
-};
-
-/**
- * End the application
- */
-rl.on("close", function () {
-    console.clear();
-    showGoodByeMessage()
-    
-    process.exit(0);
-});
 
  /**
  * Show the game menu and get the game mode that the player wants to play
@@ -363,6 +346,23 @@ const menu = () => {
         }
     });
 };
+
+/**
+ * Starts the tic-tac-toe game
+ */
+ const start = () => { 
+    menu();
+};
+
+/**
+ * End the application
+ */
+ rl.on("close", function () {
+    console.clear();
+    showGoodByeMessage()
+    
+    process.exit(0);
+});
 
 module.exports = {
     start,

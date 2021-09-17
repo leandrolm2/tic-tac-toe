@@ -23,23 +23,27 @@ class Player {
 
     /**
      * 
-     * @returns {boolean} set to the original player turn
+     * @returns {boolean} get player turn
      */
     getPlayerTurn() {
         return this.playerTurn
     }
 
     /**
+     * Set the player turn
+     * @param {boolean} currentPlayerTurn 
+     */
+     setPlayerTurn(currentPlayerTurn) {
+        this.playerTurn = currentPlayerTurn;
+    }
+
+    /**
      * 
-     * @returns {string} returns weapon the current player 
+     * @returns {string} returns weapon from current player 
      */
     getWeapon() {
         return this.weapon;
     };
-
-    setTurn() {
-        return this.playerTurn
-    }
     
     /**
      * Gives the player 2 points by winning
@@ -62,10 +66,6 @@ class Player {
         this.playerTurn = !this.playerTurn;
     };
 
-    /**
-     * @returns {number} Player points
-     */
 }
-
 
 module.exports = Player

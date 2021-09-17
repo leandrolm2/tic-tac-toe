@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Ongoing Changes
+## [2.0.1] - 2021-09-16
+### Changed
+- Changed the function name setTurn to setPlayerTurn in the Player class
+- Changed the order of functions in the Player class file and game.js file
+### Fixed
+- Removed unnecessary comments
+- Fixed a bug in the function setPlayerTurn
+### Added
+- Add the possibility to return to the menu when the game ends. 
 ## [2.0.0] - 2021-09-16
 ### Added
 - Add the possibility to return to the menu when the game ends.  
@@ -17,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Improved bot moves
 
 ### Removed
--remove the indeex.js file
+- remove the indeex.js file
 ## [1.4.0] - 2021-09-03
 ### Added
 - Added Player class
