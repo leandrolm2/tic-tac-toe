@@ -61,39 +61,7 @@ loseToBot = () => {
     console.log(`${botPlayer.getName()} is the Winner!!`);
 }
 
-showsOverhallWinnerMulti = (playerOne, playerTwo) => {
-    if (playerOne.getPoints() > playerTwo.getPoints()) {
-
-        return console.log(`With ${playerOne.getPoints()} points, ${playerOne.getName()} was the overall winner of the match over ${playerTwo.getName()}, with ${playerTwo.getName()} poinst`);
-        
-    } else if (playerTwo.points > playerOne.points) {
-
-        return console.log(`With ${playerTwo.getPoints()} points, ${playerTwo.getName()} was the overall winner of the match over ${playerOne.getName()}, with ${playerOne.getPoints} poinst`);
-        
-    } else {
-
-        return console.log( `The overall match was an empate, both players with the amount of ${playerOne.getPoints()}`);
-        
-    }
-}
-
-showsOverhallWinnerSingle = (playerOne, botPlayer) => {
-    if (playerOne.getPoints() > botPlayer.getPoints()) {
-
-        console.log(`With ${playerOne.getPoints()} points, ${playerOne.getName()} was the overall winner over ${botPlayer.getName()}, with ${botPlayer.getPoints()} poinst`);
-        menu();
-    } else if (botPlayer.points > playerOne.points) {
-
-        console.log(`With ${botPlayer.getPoints()} points, ${botPlayer.getName()} was the overall winner over ${playerOne.getName()}, with ${playerOne.getPoints()} poinst`);
-        menu();
-    } else {
-
-        console.log( `The overall game was an empate, both players with the amount of ${playerOne.getPoints()}`);
-        menu();
-    }
-}
-
-conectionMessage = () => {
+connectionMessage = () => {
     console.log("NICE! SO...");
 }
 
@@ -104,7 +72,5 @@ module.exports = {
     displayTable,
     winnerMessage,
     loseToBot,
-    showsOverhallWinnerMulti,
-    showsOverhallWinnerSingle,
-    conectionMessage,
+    connectionMessage,
 };

@@ -76,10 +76,10 @@ const currentPlayer = () => {
 const declaretWinner = () => {
     if (playerOne.getPlayerTurn() || playerTwo && playerTwo.getPlayerTurn()) {
         playerRound.win();
-        winnerMessage(playerRound)
+        displayArt.winnerMessage(playerRound)
     } else {
         botPlayer.win();
-        loseToBot();
+        displayArt.loseToBot();
     }
 };
 
@@ -93,13 +93,13 @@ const rematch = () => {
 
             if (gameChoice === gameModesEnum.MULTIPLAYER) {
                 console.clear()
-                conectionMessage()
+                displayArt.connectionMessage()
                 multiplayer(true);
             }
 
             if (gameChoice === gameModesEnum.SINGLE_PLAYER) {
                 console.clear()
-                conectionMessage()
+                displayArt.connectionMessage()
                 singlePlayer(true);
             }
 
@@ -187,7 +187,7 @@ const checkWinner = () => {
  */
 const consequenceMove = () => {
     console.clear(); 
-    displayTable(firstLine, secondLine, thirdLine);
+    displayArt.displayTable(firstLine, secondLine, thirdLine);
     checkWinner();
 };
 
@@ -214,7 +214,7 @@ const game = () => {
                 if (parsedLetter === 'a') {
                   if (firstLine[parsedNumber] !== ' ') {
 
-                    showNotEmpty()
+                    displayArt.showNotEmpty()
                     game();
                   } else {
 
@@ -224,7 +224,7 @@ const game = () => {
                 } else if (parsedLetter === 'b') {
                   if (secondLine[parsedNumber] !== ' ') {
                 
-                    showNotEmpty()
+                    displayArt.showNotEmpty()
                     game();
                   } else {
 
@@ -234,7 +234,7 @@ const game = () => {
                 } else if (parsedLetter === 'c') {
                   if (thirdLine[parsedNumber] !== ' ') {
 
-                    showNotEmpty()
+                    displayArt.showNotEmpty()
                     game();
                   } else {
                     thirdLine[parsedNumber] = playerRound.getWeapon();
@@ -260,7 +260,7 @@ const multiplayer = (rematch = false) => {
                 playerTwo = new Player(namePlayerTwo, 'O');
                 botPlayer = new Bot('bot', 'O');
                 setup();
-                displayTable(firstLine, secondLine, thirdLine);
+                displayArt.displayTable(firstLine, secondLine, thirdLine);
                 currentPlayer()
                 game();
             });
@@ -269,7 +269,7 @@ const multiplayer = (rematch = false) => {
         playerOne.setPlayerTurn(true);
         playerTwo.setPlayerTurn(false);
         setup();
-        displayTable(firstLine, secondLine, thirdLine);
+        displayArt.displayTable(firstLine, secondLine, thirdLine);
         currentPlayer()
         game();
     }
@@ -295,7 +295,7 @@ const singlePlayer = (rematch = false) => {
                     playerOne = new Player(namePlayerOne, 'X', !botPlaysFirst);
                     botPlayer = new Bot('bot', 'O', botPlaysFirst);
                     setup();
-                    displayTable(firstLine, secondLine, thirdLine);
+                    displayArt.displayTable(firstLine, secondLine, thirdLine);
                     currentPlayer();
                     game();    
                 });
@@ -307,14 +307,14 @@ const singlePlayer = (rematch = false) => {
             playerOne.setPlayerTurn(false);
             botPlayer.setPlayerTurn(true);
             setup();
-            displayTable(firstLine, secondLine, thirdLine);
+            displayArt.displayTable(firstLine, secondLine, thirdLine);
             currentPlayer();
             game();
         } else {
             playerOne.setPlayerTurn(true);
             botPlayer.setPlayerTurn(false);
             setup();
-            displayTable(firstLine, secondLine, thirdLine);
+            displayArt.displayTable(firstLine, secondLine, thirdLine);
             currentPlayer();
             game();
         }
@@ -327,7 +327,7 @@ const singlePlayer = (rematch = false) => {
  */
 const menu = () => {
     console.clear();
-    showGameName()
+    displayArt.showGameName()
     readline.emitKeypressEvents(process.stdin);
     if (process.stdin.isTTY) {
         process.stdin.setRawMode(true);
@@ -359,7 +359,7 @@ const menu = () => {
  */
  rl.on("close", function () {
     console.clear();
-    showGoodByeMessage()
+    displayArt.showGoodByeMessage()
     
     process.exit(0);
 });

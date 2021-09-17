@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Ongoing Changes
+## [2.0.2] - 2021-09-16
+### Fixed
+- The functions call of display.js file
+### Removed
+- Unnecessary functions
 ## [2.0.1] - 2021-09-16
 ### Changed
 - Changed the function name setTurn to setPlayerTurn in the Player class
