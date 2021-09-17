@@ -1,8 +1,8 @@
 const readline = require("readline");
 
 const Player = require('./Player.js');
-const DisplayArt = require('./display.js');
 const Bot = require('./Bot')
+const displayArt = require('./display.js');
 
 const gameModesEnum = require('./enum/gameModes.js');
 
@@ -12,7 +12,7 @@ const rl = readline.createInterface({
 });
 
 
-const showArt = new DisplayArt()
+
 let playFirst
 let playerRound;
 let gameChoice;
@@ -31,51 +31,19 @@ const setup = () => {
     thirdLine = [' ', ' ', ' '];
 };
 
-/**
- * Show the tic-tac-toe table
- */
-const display = () => {
-    console.log(`      |     |      `);
-  
-    console.log(`   ${firstLine[0]}  |  ${firstLine[1]}  |  ${firstLine[2]}         `)
-  
-    console.log(`______|_____|______ `);
-  
-    console.log(`      |     |      `);
-  
-    console.log(`   ${secondLine[0]}  |  ${secondLine[1]}  |  ${secondLine[2]}         `)
-  
-    console.log(`______|_____|______ `);
-  
-    console.log(`      |     |      `);
-  
-    console.log(`   ${thirdLine[0]}  |  ${thirdLine[1]}  |  ${thirdLine[2]}         `)
-  
-    console.log(`      |     |      `);
-};
-
-
 
 /**
  * Changes players turn
  */
 const changeTurn = () => {
     if(gameChoice === gameModesEnum.SINGLE_PLAYER){
-        if (playerOne) {
-            playerOne.switchPlayer();
-        }
-
-        if (botPlayer) {
-            botPlayer.switchPlayer();
-        }
+        playerOne.switchPlayer();
+        botPlayer.switchPlayer();
+        
     } else {
-        if (playerOne) {
-            playerOne.switchPlayer();
-        }
-
-        if (playerTwo) {
-            playerTwo.switchPlayer();
-        }
+        
+        playerOne.switchPlayer();
+        playerTwo.switchPlayer();
     }
 };
 
@@ -83,21 +51,21 @@ const changeTurn = () => {
  * Get a attribute value from the current player
  * @param {'weapon'|'name'} att Attribute name to be returned
  */
-const CurrentPlayer = () => {
+const currentPlayer = () => { //funcões sempre começam com letra minuscula <===== arrumar
     if(gameChoice === gameModesEnum.SINGLE_PLAYER) {
-        if (playerOne && playerOne.playerTurn) {
+        if (playerOne && playerOne.getPlayerTurn()) {
             playerRound = playerOne;
         }
 
-        if (botPlayer && botPlayer.playerTurn) {
+        if (botPlayer && botPlayer.getPlayerTurn()) {
             playerRound = botPlayer;
         }
     } else {
-        if (playerOne && playerOne.playerTurn) {
+        if (playerOne && playerOne.getPlayerTurn()) {
             playerRound = playerOne;
         }
 
-        if (playerTwo && playerTwo.playerTurn) {
+        if (playerTwo && playerTwo.getPlayerTurn()) {
             playerRound = playerTwo;
         }
     }
@@ -107,15 +75,12 @@ const CurrentPlayer = () => {
  * Gives the winner his points and congratulates him
  */
 const declaretWinner = () => {
-    if (playerOne.playerTurn) {
-        playerOne.win();
-        console.log(`YOU WON ${playerOne.name}!!`);
-    } else if (playerTwo && playerTwo.playerTurn) {
-        playerTwo.win();
-        console.log(`YOU WON ${playerTwo.name}!!`);
+    if (playerOne.getPlayerTurn() || playerTwo && playerTwo.getPlayerTurn()) {
+        playerRound.win();
+        winnerMessage(playerRound)
     } else {
         botPlayer.win();
-        console.log(`${botPlayer.name} is the Winner!!`);
+        loseToBot();
     }
 };
 
@@ -129,13 +94,13 @@ const rematch = () => {
 
             if (gameChoice === gameModesEnum.MULTIPLAYER) {
                 console.clear()
-                console.log("NICE! SO...");
+                conectionMessage()
                 multiplayer(true);
             }
 
             if (gameChoice === gameModesEnum.SINGLE_PLAYER) {
                 console.clear()
-                console.log("NICE! SO...");
+                conectionMessage()
                 singlePlayer(true);
             }
 
@@ -143,35 +108,14 @@ const rematch = () => {
         case "no":
             if (gameChoice === gameModesEnum.MULTIPLAYER) {
                 
-                if (playerOne.points > playerTwo.points) {
-
-                    console.log(`With ${playerOne.points} points, ${playerOne.name} was the overall winner of the match over ${playerTwo.name}, with ${playerTwo.points} poinst`);
-                    menu();
-                } else if (playerTwo.points > playerOne.points) {
-    
-                    console.log(`With ${playerTwo.points} points, ${playerTwo.name} was the overall winner of the match over ${playerOne.name}, with ${playerOne.points} poinst`);
-                    menu();
-                } else {
-    
-                    console.log( `The overall match was an empate, both players with the amount of ${playerOne.points}`);
-                    menu();
-                }
+                showOverhallWinnerMulti(playerOne, playerTwo);
+                menu();
             }
 
             if(gameChoice === gameModesEnum.SINGLE_PLAYER){
-                if (playerOne.points > botPlayer.points) {
 
-                    console.log(`With ${playerOne.points} points, ${playerOne.name} was the overall winner over ${botPlayer.name}, with ${botPlayer.points} poinst`);
-                    menu();
-                } else if (botPlayer.points > playerOne.points) {
-    
-                    console.log(`With ${botPlayer.points} points, ${botPlayer.name} was the overall winner over ${playerOne.name}, with ${playerOne.points} poinst`);
-                    menu();
-                } else {
-    
-                    console.log( `The overall game was an empate, both players with the amount of ${playerOne.points}`);
-                    menu();
-                }
+                showOverhallWinnerSingle(playerOne, botPlayer)
+                menu();
             }
         break;
         default:
@@ -181,123 +125,7 @@ const rematch = () => {
     });
 }
 
-/**
- * 
- * Makes the decision of the bot's move
- */
-const botMove = (firstLine, secondLine, thirdLine) => {
-    const line = Math.floor(Math.random() * 3)+1;
-    const column = Math.floor(Math.random() * 3);
-    
-    if (firstLine[0] !== 'X' && firstLine[1] !== 'X' && firstLine[2] !== 'X') {
-        
-        if(firstLine[column] === ' '){
-            return firstLine[column] = botPlayer.weapon
-        } else {
-            botMove(firstLine, secondLine, thirdLine)
-        }
 
-    } else if (secondLine[0] !== 'X' && secondLine[1] !== 'X' && secondLine[2] !== 'X') {
-        
-        if(secondLine[column] === ' '){
-            return secondLine[column] = botPlayer.weapon
-        } else {
-            botMove(firstLine, secondLine, thirdLine)
-        }
-
-    } else if (thirdLine[0] !== 'X' && thirdLine[1] !== 'X' && thirdLine[2] !== 'X') {
-        
-        if(thirdLine[column] === ' '){
-            return thirdLine[column] = botPlayer.weapon
-        } else {
-            botMove(firstLine, secondLine, thirdLine)
-        }
-
-    } else if (firstLine[0] !== 'X' && secondLine[0] !== 'X' && thirdLine[0] !== 'X') {
-        
-        if(line === 1 && firstLine[column] === ' '){
-            return firstLine[column]  = botPlayer.weapon
-        } else if (line === 2 && secondLine[column] === ' '){
-            return secondLine[column]  = botPlayer.weapon
-        } else if(line === 3 && thirdLine[column] === ' '){
-            return thirdLine[column]  = botPlayer.weapon
-        } else {
-            botMove(firstLine, secondLine, thirdLine)
-        }
-
-    } else if (firstLine[1] !== 'X' && secondLine[1] !== 'X' && thirdLine[1] !== 'X') {
-        
-        if(line === 1 && firstLine[column] === ' '){
-            return firstLine[column]  = botPlayer.weapon
-        } else if (line === 2 && secondLine[column] === ' '){
-            return secondLine[column]  = botPlayer.weapon
-        } else if(line === 3 && thirdLine[column] === ' '){
-            return thirdLine[column] = botPlayer.weapon
-        } else {
-            botMove(firstLine, secondLine, thirdLine)
-        }
-        
-    } else if (firstLine[2] !== 'X' && secondLine[2] !== 'X' && thirdLine[2] !== 'X') {
-        
-        if(line === 1 && firstLine[column] === ' '){
-            return firstLine[column] = botPlayer.weapon
-        } else if (line === 2 && secondLine[column] === ' '){
-            return secondLine[column] = botPlayer.weapon
-        } else if(line === 3 && thirdLine[column] === ' '){
-            return thirdLine[column] = botPlayer.weapon
-        } else {
-            botMove(firstLine, secondLine, thirdLine)
-        }
-        
-    } else if (firstLine[0] !== 'X' && secondLine[1] !== 'X' && thirdLine[2] !== 'X') {
-        
-        if(line === 1 && firstLine[column] === ' '){
-            return firstLine[column] = botPlayer.weapon
-        } else if (line === 2 && secondLine[column] === ' '){
-            return secondLine[column] = botPlayer.weapon
-        } else if(line === 3 && thirdLine[column] === ' '){
-            return thirdLine[column] = botPlayer.weapon
-        } else {
-            botMove(firstLine, secondLine, thirdLine)
-        }
-        
-    } else if (firstLine[2] !== 'X' && secondLine[1] !== 'X' && thirdLine[0] !== 'X') {
-        
-        if(line === 1 && firstLine[column] === ' '){
-            return firstLine[column] = botPlayer.weapon
-        } else if (line === 2 && secondLine[column] === ' '){
-            return secondLine[column] = botPlayer.weapon
-        } else if(line === 3 && thirdLine[column] === ' '){
-            return thirdLine[column] = botPlayer.weapon
-        } else {
-            botMove(firstLine, secondLine, thirdLine)
-        }
-
-    } else {
-        
-        if(line === 1){
-            if(firstLine[column] === ' '){
-                return firstLine[column] = botPlayer.weapon
-            } else {
-                botMove(firstLine, secondLine, thirdLine)
-            }
-            
-        } else if (line === 2){
-            if(secondLine[column] === ' '){
-                return secondLine[column] = botPlayer.weapon
-            } else {
-                botMove(firstLine, secondLine, thirdLine)
-            }
-        } else {
-            if(thirdLine[column] === ' '){
-                return thirdLine[column] = botPlayer.weapon
-            } else {
-                botMove(firstLine, secondLine, thirdLine)
-            }
-        }
-    }
- 
-}
 
 /**
  * Check if someone wins. If don't, then the player turn changes and the game goes on
@@ -350,7 +178,7 @@ const checkWinner = () => {
         rematch();
     } else {
         changeTurn();
-        CurrentPlayer()
+        currentPlayer()
         game();
     }
 };
@@ -360,7 +188,7 @@ const checkWinner = () => {
  */
 const consequenceMove = () => {
     console.clear(); 
-    display();
+    displayTable(firstLine, secondLine, thirdLine);
     checkWinner();
 };
 
@@ -369,7 +197,7 @@ const consequenceMove = () => {
  */
 const game = () => {
     if (playerRound === botPlayer){
-        botMove(firstLine, secondLine, thirdLine)
+        botPlayer.botMove(firstLine, secondLine, thirdLine)
         consequenceMove();
 
     } else {
@@ -387,17 +215,17 @@ const game = () => {
                 if (parsedLetter === 'a') {
                   if (firstLine[parsedNumber] !== ' ') {
 
-                    console.log('This field it\'s not empty, please chose another option');
+                    showNotEmpty()
                     game();
                   } else {
 
-                    firstLine[parsedNumber] = playerRound.getWeapon();//getCurrentPlayerAttribute('weapon'); A form to call the variable inside the class
+                    firstLine[parsedNumber] = playerRound.getWeapon();
                     consequenceMove();
                   }
                 } else if (parsedLetter === 'b') {
                   if (secondLine[parsedNumber] !== ' ') {
                 
-                    console.log(`This field it's not empty, please chose another option`);
+                    showNotEmpty()
                     game();
                   } else {
 
@@ -407,7 +235,7 @@ const game = () => {
                 } else if (parsedLetter === 'c') {
                   if (thirdLine[parsedNumber] !== ' ') {
 
-                    console.log(`This field it's not empty, please chose another option`);
+                    showNotEmpty()
                     game();
                   } else {
                     thirdLine[parsedNumber] = playerRound.getWeapon();
@@ -433,62 +261,61 @@ const multiplayer = (rematch = false) => {
                 playerTwo = new Player(namePlayerTwo, 'O');
                 botPlayer = new Bot('bot', 'O');
                 setup();
-                display();
-                CurrentPlayer()
+                displayTable(firstLine, secondLine, thirdLine);
+                currentPlayer()
                 game();
             });
         });
     } else {
-        playerOne.playerTurn = true
-        playerTwo.playerTurn = false
+        playerOne.setTurn(true);
+        playerTwo.setTurn(false);
         setup();
-        display();
-        CurrentPlayer()
+        displayTable(firstLine, secondLine, thirdLine);
+        currentPlayer()
         game();
     }
 };
 
+/**
+ * Starts a single player game against the bot
+ * @param {boolean} rematch Defaults false. If true, then a new game initiate but using the
+ * current defined players
+ */
 const singlePlayer = (rematch = false) => {
 
     if (!rematch) {
         rl.question('Do you want let the bot make the first move? (yes/no)', (firstMove) => {
-            rl.question("what's your name player 1? ", (namePlayerOne) => {
-                playFirst = firstMove  
-                if(firstMove === 'yes'){
-                    playerOne = new Player(namePlayerOne, 'X');
-                    botPlayer = new Bot('bot', 'O', true);
+            if(firstMove !== 'yes' && firstMove !== 'no'){
+                console.clear();
+                console.log('Choose a valid option');
+                singlePlayer();
+            } else {
+                rl.question("what's your name player 1? ", (namePlayerOne) => {
+                    const botPlaysFirst = firstMove === 'yes' ? true : false;
+                    playerOne = new Player(namePlayerOne, 'X', !botPlaysFirst);
+                    botPlayer = new Bot('bot', 'O', botPlaysFirst);
                     setup();
-                    display();
-                    CurrentPlayer();
-                    game();                    
-                } else if (firstMove === 'no'){
-                    playerOne = new Player(namePlayerOne, 'X', true);
-                    botPlayer = new Bot('bot', 'O');
-                    setup();
-                    display();
-                    CurrentPlayer();
-                    game();
-                } else {
-                    singlePlayer() 
-                }        
-                            
-            });
+                    displayTable(firstLine, secondLine, thirdLine);
+                    currentPlayer();
+                    game();    
+                });
+            }                 
         });
         
-    } else {
+    } else { //criar um setPlayerTurn
         if (playFirst === 'yes'){
-            playerOne.playerTurn = false;
-            botPlayer.playerTurn = true;
+            playerOne.setTurn(false);
+            botPlayer.setTurn(true);
             setup();
-            display();
-            CurrentPlayer();
+            displayTable(firstLine, secondLine, thirdLine);
+            currentPlayer();
             game();
         } else {
-            playerOne.setPlayerTurn()
-            botPlayer.setPlayerTurn()
+            playerOne.setTurn(true);
+            botPlayer.setTurn(false);
             setup();
-            display();
-            CurrentPlayer();
+            displayTable(firstLine, secondLine, thirdLine);
+            currentPlayer();
             game();
         }
         
@@ -498,7 +325,7 @@ const singlePlayer = (rematch = false) => {
 /**
  * Starts the tic-tac-toe game
  */
-const start = () => {
+const start = () => { //O menu tem que estar acima do start, colocar esse código abaixo do menu <========= (ATTENTION)
     menu();
 };
 
@@ -507,7 +334,7 @@ const start = () => {
  */
 rl.on("close", function () {
     console.clear();
-    showArt.showGoodByeMessage()
+    showGoodByeMessage()
     
     process.exit(0);
 });
@@ -517,7 +344,7 @@ rl.on("close", function () {
  */
 const menu = () => {
     console.clear();
-    showArt.showGameName()
+    showGameName()
     readline.emitKeypressEvents(process.stdin);
     if (process.stdin.isTTY) {
         process.stdin.setRawMode(true);
