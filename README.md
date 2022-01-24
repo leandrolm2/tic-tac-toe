@@ -9,7 +9,7 @@ This's a Tic Tac Toe proposed to me as a challenge in order to improve my coding
 
 ## :boom: Challenges
   - - - -
-To make a funcitonal Tic Tac Toe, I faced some challenges a long the way, challenges such as:
+To make this Tic Tac Toe i end up faced some challenges a long the way, challenges such as:
 
 * A descent menu
 * Single player mode
